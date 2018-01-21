@@ -21,5 +21,5 @@ BEGIN
 END
 
 /*
-EXEC dbo.GetHospDetails '1', 'Hosp' 
+EXEC dbo.GetHospDetails '1', 'Doc' 
 */

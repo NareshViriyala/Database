@@ -45,3 +45,20 @@ CREATE TABLE dbo.Hospital(
 	 , Email NVARCHAR(50)
 	 , WebSite NVARCHAR(200)
 )
+
+DROP TABLE dbo.DocAppointment
+GO
+CREATE TABLE dbo.DocAppointment(
+	   ApptID INT IDENTITY(1, 1)
+	 , UserID INT
+	 , Name NVARCHAR(100)
+	 , Age NVARCHAR(5)
+	 , Gender NVARCHAR(10)
+	 , DocId INT
+	 , ApptTime DATETIME
+	 , StartTime DATETIME
+	 , EndTime DATETIME
+	 , IsCancelled BIT DEFAULT NULL --0 = Patient cancelled, 1 = Doctor cancelled, NULL = Not cancelled
+	 , IsServerMap BIT DEFAULT 0 -- this bit is set to 1 if the appt is taken from server device on behalf of patient
+								 -- in case if this server device is logged in as a client then this bit will filter unwanted recode from the client profile history
+) 
