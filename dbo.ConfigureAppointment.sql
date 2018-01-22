@@ -1,7 +1,7 @@
 DROP PROCEDURE dbo.ConfigureAppointment
 GO
 CREATE PROCEDURE dbo.ConfigureAppointment(
-	   @JsonInput NVARCHAR(2000) OUTPUT --this will act as both input and output
+	   @JsonInput NVARCHAR(2000) --this will act as both input and output
 	   /*
 	   {
 			"ApptID":0, --0 = new appt, non 0 = edit, end, cancel appt
@@ -50,15 +50,21 @@ BEGIN
 		, s.IsServerMap = d.IsServerMap
 	 WHEN NOT MATCHED THEN
    INSERT (UserID, Name, Age, Gender, DocId, ApptTime, StartTime, EndTime, IsCancelled, IsServerMap)
-   VALUES (d.UserID, d.Name, d.Age, d.Gender, d.DocId, GETUTCDATE(), NULL, NULL, NULL, d.IsServerMap);
+   VALUES (d.UserID, d.Name, d.Age, d.Gender, d.DocId, GETUTCDATE(), NULL, NULL, 0, d.IsServerMap);
 
    SELECT @LastID = ISNULL(NULLIF(JSON_VALUE(@JsonInput, '$.ApptID'), 0), SCOPE_IDENTITY())
-   SELECT @JsonInput = (SELECT *
-							 , JSON_VALUE(@JsonInput, '$.UType') as UType 
-							 , '' AS Remark
-						  FROM dbo.DocAppointment 
-						 WHERE ApptID = @LastID 
-						   FOR JSON AUTO, INCLUDE_NULL_VALUES)
+   --SELECT @JsonInput = (SELECT *
+			--				 , JSON_VALUE(@JsonInput, '$.UType') as UType 
+			--				 , '' AS Remark
+			--			  FROM dbo.DocAppointment 
+			--			 WHERE ApptID = @LastID 
+			--			   FOR JSON AUTO, INCLUDE_NULL_VALUES)
+   SELECT *
+		 , JSON_VALUE(@JsonInput, '$.UType') as UType 
+		 , '' AS Remark
+	  FROM dbo.DocAppointment 
+	 WHERE ApptID = @LastID 
+	   --FOR JSON AUTO, INCLUDE_NULL_VALUES
 END
 
 /*

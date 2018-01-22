@@ -58,7 +58,7 @@ CREATE TABLE dbo.DocAppointment(
 	 , ApptTime DATETIME
 	 , StartTime DATETIME
 	 , EndTime DATETIME
-	 , IsCancelled BIT DEFAULT NULL --0 = Patient cancelled, 1 = Doctor cancelled, NULL = Not cancelled
+	 , IsCancelled TINYINT DEFAULT NULL --2 = Patient cancelled, 1 = Doctor cancelled, 0 = Not cancelled
 	 , IsServerMap BIT DEFAULT 0 -- this bit is set to 1 if the appt is taken from server device on behalf of patient
 								 -- in case if this server device is logged in as a client then this bit will filter unwanted recode from the client profile history
 ) 
