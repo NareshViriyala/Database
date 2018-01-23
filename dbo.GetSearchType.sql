@@ -5,7 +5,10 @@ CREATE PROCEDURE dbo.GetSearchType(
 	 , @Output NVARCHAR(64) OUTPUT)
 AS
 BEGIN
-	SELECT @Output = '{"Type": "Hospital"}'
+	IF(@Input = '1253')
+		SELECT @Output = '{"Type": "Hospital"}'
+	ELSE 
+		SELECT @Output = '{"Type": "None"}'
 END
 
 /*
