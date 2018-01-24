@@ -3,6 +3,7 @@ GO
 CREATE PROCEDURE dbo.GetDocDetails(@Input NVARCHAR(64))
 AS
 BEGIN
+	--WAITFOR DELAY '00:00:04'
 	SELECT d.DocId
 		 , d.DocGUID
 		 , d.FirstName
